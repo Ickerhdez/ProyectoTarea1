@@ -1,23 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import CustomButton from './src/customButton';
-import CustomInput from './src/CustomInput';
 import React, { useState } from 'react';
+import CustomInput from './src/CustomInput';
 
 export default function App() {
-  const [inputValue, setInputValue] = useState('');
+  const [email, setEmail] = useState("userexample.com"); // invalid, no @
+  const [password, setPassword] = useState("abcd"); // valid (length 4)
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Open up App.tsx to start working on your app!</Text>
-      <CustomInput
-        placeholder="Escribe aquí..."
-        value={inputValue}
-        onChangeText={setInputValue}
+      <Text style={styles.title}>Demo: inputs para evidencia</Text>
+      <CustomInput 
+        onChangeText={setEmail} 
+        value={email} 
+        placeholder={'Ingresa tu correo'} 
+        type='email'     
       />
-      <Text style={styles.valueText}>Valor actual: {inputValue}</Text>
-      <CustomButton title="Mi Boton 1" onPress={() => console.log('1')} />
-      <CustomButton title="Mi Boton 2" onPress={() => console.log('2')} variant="secondary" />
-      <CustomButton title="Mi Boton 3" onPress={() => console.log('3')} variant="tertiary" />
+      <CustomInput 
+        onChangeText={setPassword} 
+        value={password} 
+        placeholder={'Ingresa tu contraseña'} 
+        type='password'     
+      />
+      <CustomButton title ="Enviar" onPress={()=>{console.log({email, password})}}/>
       <StatusBar style="auto" />
     </View>
   );
@@ -29,15 +35,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 20,
+    padding: 20,
   },
   title: {
-    marginBottom: 20,
-    fontSize: 16,
-  },
-  valueText: {
-    marginBottom: 16,
-    fontSize: 14,
-    color: '#333',
-  },
+    fontSize: 18,
+    marginBottom: 12,
+  }
 });
