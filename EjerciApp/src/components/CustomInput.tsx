@@ -1,6 +1,6 @@
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { KeyboardTypeOptions, StyleSheet, TextInput, TouchableOpacity, View, Text } from "react-native";
+import { KeyboardTypeOptions, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 type CustomInputProps = {
   onChangeText: (text: string) => void;
@@ -30,19 +30,12 @@ export default function CustomInput({
         ? "number-pad"
         : "default";
 
-  const getError = () => {
-    if (type === "email" && value && !value.includes("@")) {
-      return "Correo inválido";
-    }
-
-    if (type === "password" && value && value.length < 4) {
-      return "La contraseña es débil";
-    }
-
-    return "";
-  };
-
-  const error = getError();
+  const error =
+    type === "email" && value && !value.includes("@")
+      ? "Correo inválido"
+      : type === "password" && value && value.length < 4
+        ? "La contraseña es débil"
+        : "";
 
   return (
     <View style={styles.wrapper}>
@@ -89,10 +82,10 @@ const styles = StyleSheet.create({
     width: "70%",
   },
   errorText: {
-    color: 'red',
+    color: "red",
     marginTop: 6,
   },
   inputError: {
-    borderColor: 'red',
+    borderColor: "red",
   },
 });
