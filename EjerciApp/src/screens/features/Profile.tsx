@@ -1,14 +1,27 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { TabsParamList } from "../../navigation/TabsNavigator";
+import { navigationRef } from "../../navigation/NavigationService";
 import CustomButton from "../../components/CustomButton";
 
-export default function Profile(){
+type ProfileProps = BottomTabScreenProps<TabsParamList, "ProfileTab">;
+
+export default function Profile({ navigation }: ProfileProps){
+    const handleLogout = () => {
+        if (navigationRef.isReady()) {
+            navigationRef.reset({
+                index: 0,
+                routes: [{ name: "LoginScreen" }],
+            });
+        }
+    };
 
     return(
         <View style={styles.container}>
             <Text style={styles.title}>Mi perfil</Text>
-            <CustomButton title="Cerrar Sesión" onPress={() => {}} />
-            <CustomButton title="Ir Atrás" onPress={() => {}} variant="secondary" />
+            <CustomButton title="Cerrar Sesion" onPress={handleLogout} />
+            <CustomButton title="Ir Atras" onPress={() => navigation.goBack()} variant="secondary" />
         </View>
     )
 }
