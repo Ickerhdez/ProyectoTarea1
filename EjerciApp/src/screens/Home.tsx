@@ -7,6 +7,7 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { TabsParamList } from "../navigation/TabsNavigator";
 import { navigationRef } from "../navigation/NavigationService";
 import CustomButton from "../components/CustomButton";
+import { useTheme } from "../context/ThemeContext";
 
 type NestedProps = CompositeScreenProps<
     BottomTabScreenProps<TabsParamList, 'HomeTab'>,
@@ -14,8 +15,8 @@ type NestedProps = CompositeScreenProps<
     >;
 
 export default function Home({navigation, route}: NestedProps){
-    //extraccion de propiedad de parametros de ruta por medio de destructuring
     const {email} = route.params;
+    const { colors } = useTheme();
 
     const handleLogout = () => {
         if (navigationRef.isReady()) {
@@ -27,8 +28,8 @@ export default function Home({navigation, route}: NestedProps){
     };
 
     return(
-        <View style={styles.container}>
-            <Text>Bienvenido, {email} </Text>
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
+            <Text style={[styles.title, { color: colors.text }]}>Bienvenido, {email}</Text>
             <CustomButton
                 title="Ir a Preferencias de Usuario"
                 onPress={() => navigation.navigate("SettingsTab")}
@@ -48,5 +49,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         padding: 20,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: "600",
+        marginBottom: 20,
     },
 });

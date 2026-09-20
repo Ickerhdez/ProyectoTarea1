@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Login({navigation} : any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { colors } = useTheme();
 
   const handleLogin = () => {
     if (!email.includes("@")) {
@@ -23,8 +25,8 @@ export default function Login({navigation} : any) {
     navigation.navigate('UserTabs', {screen:'HomeTab', params:{email}});
   }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text }]}>Inicia sesión</Text>
       <CustomInput
         onChangeText={setEmail}
         value={email}
@@ -48,9 +50,14 @@ export default function Login({navigation} : any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "700",
+    marginBottom: 20,
   },
   error: {
     color: "red",

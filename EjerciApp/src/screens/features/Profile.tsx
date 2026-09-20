@@ -4,10 +4,13 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { TabsParamList } from "../../navigation/TabsNavigator";
 import { navigationRef } from "../../navigation/NavigationService";
 import CustomButton from "../../components/CustomButton";
+import { useTheme } from "../../context/ThemeContext";
 
 type ProfileProps = BottomTabScreenProps<TabsParamList, "ProfileTab">;
 
 export default function Profile({ navigation }: ProfileProps){
+    const { colors } = useTheme();
+
     const handleLogout = () => {
         if (navigationRef.isReady()) {
             navigationRef.reset({
@@ -18,8 +21,8 @@ export default function Profile({ navigation }: ProfileProps){
     };
 
     return(
-        <View style={styles.container}>
-            <Text style={styles.title}>Mi perfil</Text>
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
+            <Text style={[styles.title, { color: colors.text }]}>Mi perfil</Text>
             <CustomButton title="Cerrar Sesion" onPress={handleLogout} />
             <CustomButton title="Ir Atras" onPress={() => navigation.goBack()} variant="secondary" />
         </View>
